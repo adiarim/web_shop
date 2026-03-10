@@ -1,0 +1,12 @@
+import axios from 'axios'
+
+const createApi = () => axios.create({
+    baseURL: 'https://07bc2abb3aaa347c.mokky.dev',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+
+const classicApi = createApi()
+
+export { classicApi }
