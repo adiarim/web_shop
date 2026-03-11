@@ -10,7 +10,7 @@ export const useCategory = create((set) => ({
         const categories = data?.map((item) => {
             return {
                 label: item.name,
-                value: item.id
+                value: item.slug
             }
         })
 

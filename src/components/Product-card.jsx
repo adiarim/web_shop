@@ -14,7 +14,7 @@ export function ProductCard({ product, currentCategory }) {
         console.log(`Товар ${product.name} летит в корзину!`);
 
         const categories = useCategory(state => state.data)
-        const currentCategory = categories.find((item) => item.value === product.categorie_id)?.label
+        const currentCategory = categories.find((item) => item.value === product.slug)?.label
     };
 
     return (
