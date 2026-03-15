@@ -1,4 +1,3 @@
-import { useFetcher } from "react-router-dom";
 import { create } from "zustand";
 
 export const useFiltersStore = create((set, get) => ({
@@ -8,5 +7,3 @@ export const useFiltersStore = create((set, get) => ({
     setSearch: (search) => set({ search }),
     setCategoryId: (categoryId) => set({ categoryId })
 }))
-
-export default useFetcher

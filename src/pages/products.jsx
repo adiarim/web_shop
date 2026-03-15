@@ -5,23 +5,19 @@ import { SearchOutlined } from '@ant-design/icons'
 import { ProductCard } from '../components/Product-card.jsx'
 import { useFiltersStore } from '../store/use-filters.js'
 import { useDebounce } from '../hooks/use-debounce.js'
-import { useCategory } from '../store/category-store.js'
+import { useCategories } from '../hooks/use-categories';
 
 const { Text } = Typography
 
 export function Products() {
+    const { data: categories, isLoading: isCatsLoading } = useCategories();
     const { data, loading, loadData, error } = useProductsStore()
-    const { data: categories, loadCategories } = useCategory()
     const { search, setSearch, categoryId, setCategoryId } = useFiltersStore()
     const debouncedSearch = useDebounce(search, 500)
 
     useEffect(() => {
         loadData(debouncedSearch, categoryId)
     }, [debouncedSearch, categoryId])
-
-    useEffect(() => {
-        loadCategories()
-    }, [])
 
     const resetFilters = () => {
         setCategoryId(null)
@@ -47,10 +43,11 @@ export function Products() {
 
                 <Segmented
                     size="large"
-                    options={categories}
+                    options={categories || []} 
                     value={categoryId}
                     onChange={(val) => setCategoryId(val)}
                     className="page-products__categories"
+                    disabled={isCatsLoading} 
                 />
                 <Button onClick={resetFilters}>Сбросить фильтры</Button>
             </div>

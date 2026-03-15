@@ -10,7 +10,7 @@ const createApi = () => axios.create({
 const classicApi = createApi()
 
 export const getProductById = async (id) => {
-    const response = await classicApi.get(`/items/${id}`); 
+    const response = await classicApi.get(`/products/${id}`); 
     return response.data;
 }
 

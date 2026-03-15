@@ -12,7 +12,7 @@ export function CartDrawer() {
             placement="right"
             open={isOpen}
             onClose={close}
-            width={720}
+            size={720}
         >
             <Title level={4}>Корзина</Title>
             <Paragraph>Здесь будет список товаров, добавленных в корзину.</Paragraph>

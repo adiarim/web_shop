@@ -281,11 +281,11 @@
 }
 
 .product-card__add-btn {
-    width: 90% !important;
-    background-color: #000 !important; 
-    border-radius: 6px !important;
-    height: 40px !important;
-    font-weight: 500 !important;
+    width: 90%;
+    background-color: #000; 
+    border-radius: 6px;
+    height: 40px;
+    font-weight: 500;
     margin: 0 auto;
 }
 
@@ -295,7 +295,97 @@
 }
 
 .ant-card-actions {
-    background: transparent !important;
-    border-top: none !important;
+    background: transparent;
+    border-top: none;
     padding-bottom: 15px;
+}
+
+.page-product {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-product__grid {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+}
+
+.page-product__image-wrapper {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.page-product__image {
+  max-width: 100%;
+  max-height: 500px; 
+  object-fit: contain; 
+  transition: transform 0.3s ease; 
+}
+
+.page-product__image-wrapper:hover .page-product__image {
+  transform: scale(1.05);
+}
+
+.page-product__info-space {
+  width: 100%;
+}
+
+.page-product__brand {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.page-product__name {
+  margin: 0;
+  font-weight: 800;
+}
+
+.page-product__price {
+  font-size: 32px;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.page-product__description {
+  font-size: 16px;
+  line-height: 1.7; 
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.page-product__add-btn {
+  height: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: #000; 
+  border-color: #000;
+}
+
+.page-product__add-btn:hover {
+  background-color: #333 !important;
+  border-color: #333;
+}
+
+.page-product__loading,
+.page-product__error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
 }
