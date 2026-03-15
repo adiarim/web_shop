@@ -1,23 +1,35 @@
 import { useParams } from "react-router-dom";
-import { useProductsStore } from "../store/products-store"; // Импортируем твой стор
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { classicApi, getProductById } from "../api/axios"; 
+import { Spin } from 'antd';
 
 export function ProductDetail() {
-  const { id } = useParams(); // Забираем id из URL
-  const { data, loadData, loading } = useProductsStore();
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Если пользователь обновил страницу, данные в сторе могут быть пустыми. 
-  // Поэтому подстрахуемся и вызовем загрузку.
   useEffect(() => {
-    if (data.length === 0) {
-      loadData();
+    const fetchSingleProduct = async () => {
+        try {
+            setLoading(true);
+            const data = await getProductById(id); 
+            setProduct(data);
+        } catch (err) {
+            console.error(err);
+            setError("Товар не найден или произошла ошибка сервера");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (id) {
+        fetchSingleProduct();
     }
-  }, []);
+}, [id]);
 
-  // Ищем конкретный товар в массиве по его id
-  const product = data.find((item) => String(item.id) === String(id));
-
-  if (loading) return <div>Загрузка...</div>;
+  if (loading) return <Spin size="large" />;
+  if (error) return <div>{error}</div>;
   if (!product) return <div>Товар не найден!</div>;
 
   return (
