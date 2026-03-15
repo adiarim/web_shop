@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
                 element: <Products />
             },
             {
-                path: '/products/:id',
+                path: '/products/:id', 
                 element: <ProductDetail />
             },
             {
@@ -27,4 +27,6 @@ export const router = createBrowserRouter([
             },
         ]
     }
-])
+], {
+    basename: "/web_shop" 
+})
