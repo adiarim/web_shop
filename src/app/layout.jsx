@@ -1,13 +1,36 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { ConfigProvider, Layout, Menu, Typography } from 'antd'
 import { useCartStore } from '../store/cart-store.js'
 import { CartDrawer } from '../components/cart-drawer'
+import { useSession } from '../store/session-store.js'
 
 const { Header, Content } = Layout
 const { Title, Text } = Typography
 
 export function AppLayout() {
     const open = useCartStore(state => state.open)
+    const { token, clear } = useSession()
+    const navigate = useNavigate()
+
+    const renderAuthButton = () => {
+        if (token) {
+            return (
+                <button
+                onClick={() => {
+                    clear()
+                    navigate('/login')
+                }}
+                className='app-header__link app-header__cart-button'
+                >Выйти</button>
+            )
+        }
+        else {
+            return <NavLink to='/login' className='app-header__link'>
+            Войти
+            </NavLink>
+        }
+    }
+
     return (
         <ConfigProvider
             theme={{
@@ -51,6 +74,10 @@ export function AppLayout() {
                                         Профиль
                                     </NavLink>
                                 ),
+                            },
+                            {
+                                key: 'login',
+                                label: renderAuthButton(),
                             },
                             {
                                 key: 'cart',
