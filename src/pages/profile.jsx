@@ -2,11 +2,17 @@ import React from 'react';
 import { Card, Button, Descriptions, Avatar, Empty } from 'antd';
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useSession } from '../store/session-store';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import {toast} from 'sonner'
 
 export const Profile = () => {
-  const { user, clearSession } = useSession(); 
+  const { user, isAuth, clear } = useSession();
   const navigate = useNavigate();
+
+  if (!isAuth) {
+    toast.info('Сперва авторизуйтесь!')
+    return <Navigate to="/" replace />
+  }
 
   const handleLogout = () => {
     clearSession(); 
@@ -30,15 +36,6 @@ export const Profile = () => {
     <div style={{ maxWidth: 800, margin: '50px auto', padding: '0 20px' }}>
       <Card 
         title="Личный кабинет" 
-        extra={
-          <Button 
-            danger 
-            icon={<LogoutOutlined />} 
-            onClick={handleLogout}
-          >
-            Выйти
-          </Button>
-        }
       >
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <Avatar size={100} icon={<UserOutlined />} style={{ backgroundColor: '#1890ff' }} />
@@ -46,10 +43,18 @@ export const Profile = () => {
         </div>
 
         <Descriptions bordered column={1}>
-          <Descriptions.Item label="Имя">{user.username}</Descriptions.Item>
-          <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
-          <Descriptions.Item label="ID пользователя">{user.id}</Descriptions.Item>
-        </Descriptions>
+        <Descriptions.Item label="Имя">
+          {user?.username || "Загрузка..."} 
+        </Descriptions.Item>
+        
+        <Descriptions.Item label="Email">
+          {user?.email || "Загрузка..."}
+        </Descriptions.Item>
+        
+        <Descriptions.Item label="ID пользователя">
+          {user?.id}
+        </Descriptions.Item>
+      </Descriptions>
       </Card>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import { classicApi } from "../api/axios.js";
 
 class AuthService {

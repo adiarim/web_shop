@@ -11,15 +11,20 @@ export const useAuth = () => {
 
     const registerMutation = useMutation({
         mutationFn: (data) => authService.register(data),
-        onSuccess: () => {
-            notification.success({
-                message: 'Успешная регистрация',
-                description: 'Теперь вы можете войти в систему под своим аккаунтом.',
-                placement: 'topRight', 
-                duration: 3, 
-            });
-            navigate('/login');
-        },
+        onSuccess: (response) => {
+            console.log(response)
+            const user = response.data; 
+            const token = response.token;
+            
+            if (user && token) {
+                setSession(user, token); 
+                toast.success(`Привет, ${user.username}! ✨`);
+                navigate('/profile');
+            }
+
+            setSession(user, token); 
+            navigate('/profile'); 
+},
         onError: (error) => {
             notification.error({
                 message: 'Ошибка регистрации',
@@ -31,9 +36,18 @@ export const useAuth = () => {
 
     const loginMutation = useMutation({
         mutationFn: (data) => authService.login(data),
-        onSuccess: (data) => {
-            setSession('/profile'); 
-            navigate('/profile'); 
+        onSuccess: (response) => {
+            console.log("Данные из консоли:", response);
+
+            // Достаем данные СТРОГО как в консоли на скрине
+            const userData = response.data; // Тут лежит объект {username, email...}
+            const token = response.token;   // Тут лежит длинная строка токена
+
+            if (userData && token) {
+                setSession(userData, token); // Передаем оба аргумента в стор
+                toast.success('Вход выполнен! ✨');
+                navigate('/profile');
+            }
         },
         onError: (error) => {
             notification.error({
